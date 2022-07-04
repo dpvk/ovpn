@@ -1,0 +1,13 @@
+version: '3'
+services:
+  dovpn:
+    build: .
+    cap_add:
+        - NET_ADMIN
+    ports:
+        - 1194:1194/tcp
+    environment:
+        HOST_ADDR: ${HOST_ADDR} 
+    volumes:
+        - ./data:/opt/ovpn_data
+    restart: always

@@ -1,0 +1,27 @@
+port 1194                                       # port                        : 1234
+proto tcp                                       # protocol                    : tcp / udp
+dev tun                                         # interface type              : tun / tap 
+ca /opt/ovpn_data/pki/ca.crt                    # CA cert path                : /opt/openvpn/ca.crt
+cert /opt/ovpn_data/pki/issued/MyReq.crt        # Server cert                 : /opt/openvpn/MyReq.crt        
+key /opt/ovpn_data/pki/private/MyReq.key        # Server priv key             : /opt/openvpn/MyReq.key
+dh /opt/ovpn_data/pki/dh.pem                    # DH-param file               : /opt/openvpn/dh.pem
+topology subnet
+server 10.8.0.0 255.255.255.0                   # Server network              : 10.8.0.0 255.255.255.0
+client-to-client
+ifconfig-pool-persist /opt/ovpn_data/ipp.txt    # Static ip address pool file : ipp.txt
+push "redirect-gateway def1 bypass-dhcp"        # Push default gateway        : redirect-gateway def1 bypass-dhcp / redirect-gateway local def1
+push "dhcp-option DNS 10.8.0.1"                 # Push DNS server             : dhcp-option DNS 10.8.0.1
+#push "route 192.168.1.0 255.255.255.0"         # Push additional route       : route 192.168.1.0 255.255.255.0
+#duplicate-cn                                   # allow multiple users to share certificate
+keepalive 10 120                                # Keelalive interval
+cipher AES-256-CBC      
+auth sha1
+user nobody
+group nobody
+persist-key                                     # Do not reread keys by SIGUSR1
+persist-tun                                     # Do not restart tap/tun devices bu SIGUSR 
+status openvpn-status.log                       # Status file. Writing status by SIGUSR2
+verb 1                                          # Verbosuty 0 - 11
+#tls-server                                      # Enable TLS server role
+#tls-version-min 1.2                             # TLS min version
+#tls-auth /opt/ovpn_data/ta.key 0                # TLS key file

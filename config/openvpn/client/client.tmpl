@@ -1,0 +1,18 @@
+client                  # Specify client mode
+dev tun                 # Dev type            : tun / tap
+proto tcp               # Protocol            : tcp / udp
+resolv-retry infinite   # Keep trying resolv  server hostname
+nobind                  # Do not bind local port
+persist-key             # Do not reread key
+persist-tun             # Do not restart interfaces
+cipher AES-256-GCM
+auth SHA512
+verb 3
+tls-client             # TLS client mode
+tls-version-min 1.2    # min TLS versio
+key-direction 1        # Key check direction
+remote-cert-tls server # Check server certificate
+;remote localhost 1194
+;ca ca.crt
+;cert client.crt
+;key client.key
